@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do List</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-image: url("list.jpeg");
+        height: (100vh);
+        background-size: (cover);
+        background-position: (center); /* Light Red */
+    }
+    .container {
+        max-width: 400px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #4bd0f1e5; /* Light Green */
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1 {
+        text-align: center;
+    }
+    input[type="text"] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    li {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        transition: background-color 0.3s ease;
+    }
+    li:last-child {
+        border-bottom: none;
+    }
+    .delete {
+        float: right;
+        cursor: pointer;
+        color: #ff0000; /* Red */
+        margin-left: 10px; /* Adjust as needed */
+    }
+    .checkbox {
+        margin-right: 10px;
+    }
+    .completed {
+        text-decoration: line-through;
+    }
+    .datetime {
+        font-size: 0.8em;
+        color: #1b1818; /* Gray */
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>To-Do List</h1>
+    <input type="text" id="taskInput" placeholder="Add new task...">
+    <ul id="taskList"></ul>
+</div>
+
+<script>
+    const taskInput = document.getElementById("taskInput");
+    const taskList = document.getElementById("taskList");
+
+    // Function to add a new task
+    function addTask() {
+        const taskText = taskInput.value.trim();
+        if (taskText !== "") {
+            const li = document.createElement("li");
+            const currentDate = new Date();
+            const dateTimeString = currentDate.toLocaleString();
+            li.innerHTML = `<input type="checkbox" class="checkbox" onclick="toggleTask(this)"> ${taskText}<span class="delete" onclick="deleteTask(this)">❌ Delete</span><span class="datetime">${dateTimeString}</span>`;
+            taskList.appendChild(li);
+            taskInput.value = "";
+        }
+    }
+
+    // Event listener for adding task
+    taskInput.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            addTask();
+        }
+    });
+
+    // Function to delete a task
+    function deleteTask(element) {
+        element.parentElement.remove();
+    }
+
+    // Function to toggle task completion
+    function toggleTask(element) {
+        const taskText = element.nextSibling;
+        if (element.checked) {
+            taskText.classList.add("completed");
+        } else {
+            taskText.classList.remove("completed");
+        }
+    }
+</script>
+
+</body>
+</html>
